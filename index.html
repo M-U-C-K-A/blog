@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Alami';
+            src: url('public/font/Alami.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Ciguatera';
+            src: url('public/font/ciguatera.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Mooxy';
+            src: url('public/font/mooxy.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Radon';
+            src: url('public/font/radon.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .Alami {
+            font-family: 'Alami', sans-serif;
+        }
+
+        .Ciguatera {
+            font-family: 'Ciguatera', sans-serif;
+        }
+
+        .Mooxy {
+            font-family: 'Mooxy', sans-serif;
+        }
+
+        .Radon {
+            font-family: 'Radon', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-12 space-y-16" id="app">
+        <h1 class="text-4xl font-bold mb-8 text-center">Font Testing</h1>
+        <!-- Les sections seront générées par JavaScript -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const testContent = {
+                title: "Sample Title",
+                paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.",
+                codeBlock: "const example = () => {\n  console.log('Hello world!');\n};",
+                listItems: ["Item 1", "Item 2", "Item 3"],
+				tableData: [
+					{ name: "John Doe", age: 30 },
+					{ name: "Jane Smith", age: 25 },
+					{ name: "Bob Johnson", age: 40 },
+				],
+            };
+
+            const fonts = [
+                { name: 'Alami', className: 'Alami' },
+                { name: 'Ciguatera', className: 'Ciguatera' },
+                { name: 'Mooxy', className: 'Mooxy' },
+                { name: 'Radon', className: 'Radon' },
+            ];
+
+            const app = document.getElementById('app');
+
+            fonts.forEach(font => {
+                const section = document.createElement('section');
+                section.className = `${font.className} space-y-6 p-6 border rounded-lg`;
+
+                section.innerHTML = `
+                    <h2 class="text-2xl font-bold mb-4">${font.name}</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Headings:</h3>
+                            <h1 class="text-4xl">${testContent.title}</h1>
+                            <h2 class="text-3xl">${testContent.title}</h2>
+                            <h3 class="text-2xl">${testContent.title}</h3>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Paragraph:</h3>
+                            <p class="text-base">${testContent.paragraph}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Code Block:</h3>
+                            <pre class="p-4 bg-gray-100 rounded-md overflow-x-auto"><code>${testContent.codeBlock}</code></pre>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">List:</h3>
+                            <ul class="list-disc pl-5">
+                                ${testContent.listItems.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+						<table class="w-full">
+							<thead>
+								<tr>
+									<th class="px-4 py-2">Name</th>
+									<th class="px-4 py-2">Age</th>
+								</tr>
+							</thead>
+							<tbody>
+								${testContent.tableData.map(item => `
+									<tr>
+										<td class="border px-4 py-2">${item.name}</td>
+										<td class="border px-4 py-2">${item.age}</td>
+									</tr>
+								`).join('')}
+							</tbody>
+						</table>
+						<p> a b c d e f g h i j k l m n o p q r s t u v w x y z
+						<br> A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+						<br> 0 1 2 3 4 5 6 7 8 9</p>
+                    </div>
+                `;
+
+                app.appendChild(section);
+            });
+        });
+    </script>
+</body>
+</html>
