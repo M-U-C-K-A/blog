@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: AuthorPageProps) {
 
 export default function AuthorPage({ params }: AuthorPageProps) {
   const author = getAuthorBySlug(params.slug)
-  const authorArticles = getArticlesByAuthor(params.slug)
+  const articles = getArticlesByAuthor(params.slug)
 
   if (!author) {
     notFound()
@@ -93,7 +93,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             <div className="flex flex-col sm:flex-row gap-6 items-start">
               <Avatar className="h-32 w-32">
                 <AvatarImage
-                  src={`https://api.dicebear.com/9.x/initials/svg?seed=${author.slug}`}
+                  src={`/avatars/${author.slug}.svg`}
                   alt={author.name}
                 />
                 <AvatarFallback className="text-2xl">{getInitials(author.name)}</AvatarFallback>
@@ -106,7 +106,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {author.expertise.map((skill, index) => (
-                    <Badge key={index} variant="secondary">
+                    <Badge key={index} variant="outline">
                       {skill}
                     </Badge>
                   ))}
@@ -195,23 +195,33 @@ export default function AuthorPage({ params }: AuthorPageProps) {
         <section>
           <div className="flex items-center gap-2 mb-6">
             <BookOpen className="h-6 w-6" />
-            <h2 className="text-3xl font-bold">Articles publiés ({authorArticles.length})</h2>
+            <h2 className="text-3xl font-bold">Articles publiés ({articles.length})</h2>
           </div>
 
-          {authorArticles.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {authorArticles.map((article) => (
-                <ArticleCard
-                  key={article.id}
-                  title={article.title}
-                  description={article.description}
-                  author={article.author.name}
-                  author_slug={article.author.slug}
-                  date={formatDate(article.publishedAt)}
-                  category={article.category.name}
-                  slug={article.slug}
-                  readTime={article.readTime}
-                />
+          {articles.length > 0 ? (
+            <div className="space-y-6">
+              {articles.map((article) => (
+                <article key={article.slug} className="border rounded-lg p-6">
+                  <Link href={`/articles/${article.slug}`}>
+                    <h3 className="text-xl font-semibold mb-2 hover:text-blue-600">
+                      {article.title}
+                    </h3>
+                  </Link>
+                  <p className="text-gray-600 mb-4">{article.description}</p>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <span className="mr-4">{formatDate(article.publishedAt)}</span>
+                    <span className="mr-4">{article.readTime}</span>
+                    <span className="mr-4">{article.views} vues</span>
+                    <span>{article.citations} citations</span>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {article.tags.map((tag) => (
+                      <Badge key={tag} variant="outline">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </article>
               ))}
             </div>
           ) : (

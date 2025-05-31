@@ -6,10 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArticleCard } from "@/components/article-card"
 import { Header } from "@/components/header"
 
-
-import { getFeaturedArticles, formatDate } from "@/lib/data"
+import { getFeaturedArticles, getCategories, formatDate } from "@/lib/data"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { getInitials } from "@/lib/data"
 
 const featuredArticles = getFeaturedArticles()
+const categories = getCategories()
 
 const stats = [
   { icon: BookOpen, label: "Articles publiés", value: "1,247" },
@@ -17,7 +19,7 @@ const stats = [
   { icon: TrendingUp, label: "Citations", value: "12,456" },
 ]
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -69,38 +71,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Latest Articles */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">Derniers articles</h2>
-              <p className="text-muted-foreground mt-2">
-                Découvrez les recherches les plus récentes de notre communauté scientifique
-              </p>
-            </div>
-            <Link href="/articles">
-              <Button variant="outline">
-                Voir tous les articles
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+      {/* Featured Articles */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-bold mb-6">Articles à la Une</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredArticles.map((article) => (
+            <article
+              key={article.slug}
+              className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <Link href={`/articles/${article.slug}`}>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
+                  <p className="text-gray-600 mb-4">{article.description}</p>
+                  <div className="flex items-center">
+                    <Avatar className="h-10 w-10">
+                      <AvatarFallback>{getInitials(article.author.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium">{article.author.name}</p>
+                      <p className="text-sm text-gray-500">{formatDate(article.publishedAt)}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center text-sm text-gray-500">
+                    <span className="mr-4">{article.readTime}</span>
+                    <span className="mr-4">{article.views} vues</span>
+                    <span>{article.citations} citations</span>
+                  </div>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuredArticles.map((article, index) => (
-              <ArticleCard
-                key={article.id}
-                title={article.title}
-                description={article.description}
-                author={article.author.name}
-                author_slug={article.author.slug}
-                date={formatDate(article.publishedAt)}
-                category={article.category.name}
-                slug={article.slug}
-                readTime={article.readTime}
-              />            ))}
-          </div>
+      {/* Categories */}
+      <section>
+        <h2 className="text-2xl font-bold mb-6">Catégories</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {categories.map((category) => (
+            <Link
+              key={category.slug}
+              href={`/categories/${category.slug}`}
+              className="p-4 border rounded-lg text-center hover:bg-gray-50 transition-colors"
+            >
+              <h3 className="font-medium">{category.name}</h3>
+              <p className="text-sm text-gray-500">{category.count} articles</p>
+            </Link>
+          ))}
         </div>
       </section>
 

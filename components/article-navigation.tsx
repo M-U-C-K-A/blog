@@ -15,7 +15,7 @@ export const ArticleNavigation = ({ currentSlug }: ArticleNavigationProps) => {
       {previous && (
         <Link
           href={`/articles/${previous.slug}`}
-          className="flex-1 group border p-2 rounded-md hover:bg-muted/40 flex items-start gap-2"
+          className="flex-1 group border p-4 rounded-md hover:bg-muted/40 flex items-start gap-2 min-h-[100px]"
         >
           <ChevronLeft className="h-5 w-5 text-muted-foreground mt-0.5 group-hover:text-primary" />
           <div>
@@ -30,7 +30,7 @@ export const ArticleNavigation = ({ currentSlug }: ArticleNavigationProps) => {
       {next && (
         <Link
           href={`/articles/${next.slug}`}
-          className={`flex-1 group border p-2 rounded-md hover:bg-muted/40 flex items-end gap-2 ${!previous ? 'ml-auto' : 'ml-auto text-right'}`}
+          className={`flex-1 group border p-4 rounded-md hover:bg-muted/40 flex items-end gap-2 min-h-[100px] ${!previous ? 'ml-auto' : 'ml-auto text-right'}`}
         >
           <div>
             <p className="text-sm text-muted-foreground mb-1">Article suivant</p>

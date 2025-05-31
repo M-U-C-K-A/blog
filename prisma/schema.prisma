@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-py"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String    @unique
+  title         String
+  affiliation   String
+  bio           String
+  expertise     String[]
+  email         String
+  twitter       String?
+  linkedin      String?
+  orcid         String?
+  researchgate  String?
+  articlesCount Int
+  citations     Int
+  hIndex        Int
+  avatar        String
+  articles      Article[]
+  education     Education[]
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  year        String
+  author      Author   @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  articles  Article[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  articles  Article[]
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  content     String
+  publishedAt DateTime
+  readTime    String
+  featured    Boolean
+  views       Int
+  citations   Int
+  author      Author   @relation(fields: [authorId], references: [id])
+  authorId    String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  tags        Tag[]
+  components  Component[]
+}
+
+model Component {
+  id        String   @id @default(cuid())
+  type      String
+  data      Json
+  article   Article  @relation(fields: [articleId], references: [id])
+  articleId String
+}
