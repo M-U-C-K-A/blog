@@ -11,6 +11,7 @@ import { ReadingProgress } from "@/components/reading-progress"
 import { ArticleCard } from "@/components/article-card"
 import { getArticleBySlug, getRelatedArticles, formatDate } from "@/lib/data"
 import { ArticleNavigation } from "@/components/article-navigation"
+import { ArticleHeader } from "@/components/article-header"
 
 const ArticlePage = () => {
   const article = getArticleBySlug("ai-advances")
@@ -23,43 +24,7 @@ const ArticlePage = () => {
 
       <div className="container mx-auto py-10 px-4 md:px-6 max-w-4xl">
         {/* Navigation */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/articles">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Retour aux articles
-            </Button>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              <Share2 className="mr-2 h-4 w-4" />
-              Partager
-            </Button>
-            <Button variant="outline" size="sm">
-              <Bookmark className="mr-2 h-4 w-4" />
-              Sauvegarder
-            </Button>
-          </div>
-        </div>
-
-        {/* Article Header */}
-        <header className="mb-8">
-          <Badge className="mb-4">{article?.category.name}</Badge>
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4">{article?.title}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
-            <span>{article?.author.name}</span>
-            <span>•</span>
-            <span>{article && formatDate(article.publishedAt)}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {article?.readTime} de lecture
-            </span>
-          </div>
-          <p className="text-xl leading-relaxed text-muted-foreground">
-            Les récentes avancées en intelligence artificielle révolutionnent des secteurs entiers, de la santé à la création artistique, tout en soulevant d'importantes questions éthiques.
-          </p>
-        </header>
+        {article && <ArticleHeader article={article} />}
 
         <Separator className="mb-8" />
 

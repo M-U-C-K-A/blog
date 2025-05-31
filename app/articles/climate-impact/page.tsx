@@ -3,7 +3,6 @@ import { ArrowLeft, Share2, Bookmark, Clock } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -11,9 +10,11 @@ import { Header } from "@/components/header"
 import { ReadingProgress } from "@/components/reading-progress"
 import { ArticleCard } from "@/components/article-card"
 import { Chart } from "./chart"
+import { Tableau } from "./table"
 import { BarChartComponent } from "./bar-chart"
 import { getArticleBySlug, getRelatedArticles, formatDate } from "@/lib/data"
 import { ArticleNavigation } from "@/components/article-navigation"
+import { ArticleHeader } from "@/components/article-header"
 
 const ArticlePage = () => {
   const article = getArticleBySlug("climate-impact")
@@ -26,44 +27,7 @@ const ArticlePage = () => {
 
       <div className="container mx-auto py-10 px-4 md:px-6 max-w-4xl">
         {/* Navigation */}
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/articles">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Retour aux articles
-            </Button>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              <Share2 className="mr-2 h-4 w-4" />
-              Partager
-            </Button>
-            <Button variant="outline" size="sm">
-              <Bookmark className="mr-2 h-4 w-4" />
-              Sauvegarder
-            </Button>
-          </div>
-        </div>
-
-        {/* Article Header */}
-        <header className="mb-8">
-          <Badge className="mb-4">{article?.category.name}</Badge>
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-4">{article?.title}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
-            <span>{article?.author.name}</span>
-            <span>•</span>
-            <span>{article && formatDate(article.publishedAt)}</span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {article?.readTime} de lecture
-            </span>
-          </div>
-          <p className="text-xl leading-relaxed text-muted-foreground">
-            Cette étude examine les effets du réchauffement des océans sur les écosystèmes marins et présente des
-            données recueillies sur une période de dix ans dans différentes régions océaniques.
-          </p>
-        </header>
+        {article && <ArticleHeader article={article} />}
 
         <Separator className="mb-8" />
 
@@ -117,67 +81,7 @@ const ArticlePage = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableCaption>Données collectées entre 2015 et 2025 dans cinq zones océaniques</TableCaption>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Zone</TableHead>
-                        <TableHead>Temp. 2015 (°C)</TableHead>
-                        <TableHead>Temp. 2025 (°C)</TableHead>
-                        <TableHead>Variation</TableHead>
-                        <TableHead>Espèces 2015</TableHead>
-                        <TableHead>Espèces 2025</TableHead>
-                        <TableHead>Variation (%)</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className="font-medium">Atlantique Nord</TableCell>
-                        <TableCell>15.2</TableCell>
-                        <TableCell>16.8</TableCell>
-                        <TableCell>+1.6</TableCell>
-                        <TableCell>342</TableCell>
-                        <TableCell>298</TableCell>
-                        <TableCell className="text-red-500">-12.9%</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Méditerranée</TableCell>
-                        <TableCell>19.8</TableCell>
-                        <TableCell>22.1</TableCell>
-                        <TableCell>+2.3</TableCell>
-                        <TableCell>315</TableCell>
-                        <TableCell>256</TableCell>
-                        <TableCell className="text-red-500">-18.7%</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Mer des Caraïbes</TableCell>
-                        <TableCell>27.1</TableCell>
-                        <TableCell>29.4</TableCell>
-                        <TableCell>+2.3</TableCell>
-                        <TableCell>487</TableCell>
-                        <TableCell>392</TableCell>
-                        <TableCell className="text-red-500">-19.5%</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Pacifique Sud</TableCell>
-                        <TableCell>24.3</TableCell>
-                        <TableCell>26.1</TableCell>
-                        <TableCell>+1.8</TableCell>
-                        <TableCell>523</TableCell>
-                        <TableCell>458</TableCell>
-                        <TableCell className="text-red-500">-12.4%</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Océan Indien</TableCell>
-                        <TableCell>26.7</TableCell>
-                        <TableCell>28.9</TableCell>
-                        <TableCell>+2.2</TableCell>
-                        <TableCell>498</TableCell>
-                        <TableCell>412</TableCell>
-                        <TableCell className="text-red-500">-17.3%</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  <Tableau />
                 </CardContent>
                 <CardFooter className="text-sm text-muted-foreground">
                   Source: Données collectées par l'équipe de recherche, 2015-2025

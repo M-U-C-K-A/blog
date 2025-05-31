@@ -7,6 +7,7 @@ import {
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
+  LabelList,
 } from "recharts"
 
 import {
@@ -112,7 +113,7 @@ export function Chart() {
           />
           <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
           {Object.entries(chartConfig).map(([dataKey, config]) => (
-            <Line
+            <Line 
               key={dataKey}
               type="monotone"
               dataKey={dataKey}
@@ -120,7 +121,9 @@ export function Chart() {
               strokeWidth={2}
               dot={{ r: 3 }}
               activeDot={{ r: 6 }}
-            />
+            >
+              <LabelList dataKey={dataKey} position="top" />
+            </Line>
           ))}
         </LineChart>
       </ResponsiveContainer>

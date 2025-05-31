@@ -32,32 +32,36 @@ export function SubscribeButton() {
         <div className="space-y-4">
           {/* Choix de période */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="border rounded-md p-4 hover:border-primary transition-colors">
-              <label className="flex flex-col items-center space-y-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="period"
-                  value="monthly"
-                  className="h-5 w-5 text-primary"
-                  defaultChecked
-                />
-                <span className="font-medium">Mensuel</span>
-                <span className="text-sm text-muted-foreground">9.99€/mois</span>
-              </label>
-            </div>
+            <label className="cursor-pointer">
+              <input
+                type="radio"
+                name="period"
+                value="monthly"
+                defaultChecked
+                className="peer hidden"
+              />
+              <div className="border rounded-md p-4 peer-checked:border-chart-4 border-2 transition-colors">
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="font-medium">Mensuel</span>
+                  <span className="text-sm text-muted-foreground">9.99€/mois</span>
+                </div>
+              </div>
+            </label>
 
-            <div className="border rounded-md p-4 hover:border-primary transition-colors">
-              <label className="flex flex-col items-center space-y-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="period"
-                  value="annual"
-                  className="h-5 w-5 text-primary"
-                />
-                <span className="font-medium">Annuel</span>
-                <span className="text-sm text-muted-foreground">99€/an (2 mois offerts)</span>
-              </label>
-            </div>
+            <label className="cursor-pointer">
+              <input
+                type="radio"
+                name="period"
+                value="annual"
+                className="peer hidden"
+              />
+              <div className="border rounded-md p-4 peer-checked:border-chart-4 border-2 transition-colors">
+                <div className="flex flex-col items-center space-y-2">
+                  <span className="font-medium">Annuel</span>
+                  <span className="text-sm text-muted-foreground">99€/an (2 mois offerts)</span>
+                </div>
+              </div>
+            </label>
           </div>
 
           {/* Séparateur */}
@@ -79,7 +83,7 @@ export function SubscribeButton() {
                 href="https://twitter.com/votrepage"
                 target="_blank"
                 rel="noopener noreferrer"
-              className="w-fit text-center"
+                className="w-fit text-center"
               >
                 <Twitter className="h-6 w-6" />
                 <span className="text-xs">Twitter</span>
@@ -91,8 +95,7 @@ export function SubscribeButton() {
                 href="https://facebook.com/votrepage"
                 target="_blank"
                 rel="noopener noreferrer"
-				              className="w-fit text-center"
-
+                className="w-fit text-center"
               >
                 <Facebook className="h-6 w-6" />
                 <span className="text-xs">Facebook</span>
@@ -104,8 +107,7 @@ export function SubscribeButton() {
                 href="https://instagram.com/votrepage"
                 target="_blank"
                 rel="noopener noreferrer"
-				              className="w-fit text-center"
-
+                className="w-fit text-center"
               >
                 <Instagram className="h-6 w-6" />
                 <span className="text-xs">Instagram</span>

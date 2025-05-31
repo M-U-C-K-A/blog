@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sub } from "@radix-ui/react-context-menu"
 import { SubscribeButton } from "./subscribe"
+import { ThemeToggle } from "./theme-toggle"
 
 export function Header() {
   return (
@@ -31,6 +32,7 @@ export function Header() {
 
         <div className="flex items-center space-x-2">
           <SubscribeButton />
+          <ThemeToggle />
         </div>
       </div>
     </header>
