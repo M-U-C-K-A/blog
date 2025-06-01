@@ -18,12 +18,12 @@ export function SubscribeButton() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline" size="sm">
-          S'abonner
+          S&lsquo;abonner
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-md">
         <AlertDialogHeader>
-          <AlertDialogTitle>Options d'abonnement</AlertDialogTitle>
+          <AlertDialogTitle>Options d&lsquo;abonnement</AlertDialogTitle>
           <AlertDialogDescription>
             Choisissez la formule qui vous convient
           </AlertDialogDescription>

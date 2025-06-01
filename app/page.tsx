@@ -3,7 +3,6 @@ import { ArrowRight, TrendingUp, Users, BookOpen } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArticleCard } from "@/components/article-card"
 import { Header } from "@/components/header"
 
 import { getFeaturedArticles, getCategories, formatDate } from "@/lib/data"
@@ -47,7 +46,7 @@ export default async function HomePage() {
                 </Button>
               </Link>
               <Button variant="outline" size="lg">
-                S'abonner à la newsletter
+                S&apos;abonner à la newsletter
               </Button>
             </div>
           </div>
@@ -138,7 +137,7 @@ export default async function HomePage() {
                 placeholder="Votre adresse email"
                 className="flex-1 px-3 py-2 border border-input rounded-md"
               />
-              <Button>S'abonner</Button>
+              <Button>S&apos;abonner</Button>
             </CardContent>
           </Card>
         </div>

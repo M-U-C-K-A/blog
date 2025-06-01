@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Mail, Twitter, Linkedin, BookOpen, Award } from "lucide-react"
+import type { Metadata } from "next"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,23 +12,22 @@ import { Header } from "@/components/header"
 import { ArticleCard } from "@/components/article-card"
 import { getAuthorBySlug, getArticlesByAuthor, getInitials } from "@/lib/data"
 
-interface AuthorPageProps {
-  params: {
-    slug: string
-  }
+interface Props {
+  params: { slug: string }
+  searchParams: Record<string, string | string[] | undefined>
 }
 
-export async function generateMetadata({ params }: AuthorPageProps) {
-  const author = await getAuthorBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const author = await getAuthorBySlug(params.slug)
 
   if (!author) {
     return {
       title: "Auteur non trouvé",
       description: "L'auteur que vous recherchez n'existe pas."
-    };
+    }
   }
 
-  const faviconUrl = `https://api.dicebear.com/9.x/initials/svg?seed=${author.slug}`;
+  const faviconUrl = `https://api.dicebear.com/9.x/initials/svg?seed=${author.slug}`
 
   return {
     title: `${author.name} | Climate Impact News`,
@@ -61,10 +61,10 @@ export async function generateMetadata({ params }: AuthorPageProps) {
       description: author.bio,
       images: [faviconUrl],
     },
-  };
+  }
 }
 
-export default async function AuthorPage({ params }: AuthorPageProps) {
+export default async function AuthorPage({ params }: Props) {
   const author = await getAuthorBySlug(params.slug)
   const articles = await getArticlesByAuthor(params.slug)
 
@@ -74,6 +74,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Le reste de votre code reste inchangé */}
       <Header />
 
       <div className="container mx-auto py-10 px-4 md:px-6 max-w-6xl">
@@ -176,7 +177,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {author.education.map((edu, index) => (
+              {author.education.map((edu) => (
                 <div key={edu.id} className="flex justify-between items-start">
                   <div>
                     <h2 className="font-semibold">{edu.degree}</h2>

@@ -4,12 +4,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Article } from "@/lib/types"
 
 interface ArticleNavigationProps {
-  currentSlug: string
   previous: Article | null
   next: Article | null
 }
 
-export const ArticleNavigation = ({ currentSlug, previous, next }: ArticleNavigationProps) => {
+export const ArticleNavigation = ({ previous, next }: ArticleNavigationProps) => {
   return (
     <div className="flex justify-between items-center my-6 gap-4">
       {previous && (

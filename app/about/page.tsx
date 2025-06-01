@@ -71,7 +71,7 @@ export default function AboutPage() {
           <h1 className="text-4xl font-bold tracking-tight lg:text-5xl mb-6">À propos de la SDEAM</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
             Depuis 2010, nous publions des recherches de pointe dans tous les domaines scientifiques, en mettant
-            l'accent sur la qualité, l'innovation et l'accessibilité.
+            l&apos;accent sur la qualité, l&apos;innovation et l&apos;accessibilité.
           </p>
         </div>
 
@@ -80,13 +80,13 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-6">Notre mission</h2>
           <div className="prose prose-slate dark:prose-invert max-w-none">
             <p className="text-lg leading-relaxed">
-              Le Journal Scientifique a pour mission de promouvoir l'excellence en recherche scientifique en fournissant
+              Le Journal Scientifique a pour mission de promouvoir l&apos;excellence en recherche scientifique en fournissant
               une plateforme de publication rigoureuse et accessible. Nous nous engageons à soutenir la communauté
-              scientifique mondiale en facilitant la diffusion des connaissances et en encourageant l'innovation.
+              scientifique mondiale en facilitant la diffusion des connaissances et en encourageant l&apos;innovation.
             </p>
             <p className="text-lg leading-relaxed">
-              Notre approche unique combine l'évaluation par les pairs traditionnelle avec des technologies modernes de
-              visualisation de données, permettant aux lecteurs de mieux comprendre et d'interagir avec les résultats de
+              Notre approche unique combine l&apos;évaluation par les pairs traditionnelle avec des technologies modernes de
+              visualisation de données, permettant aux lecteurs de mieux comprendre et d&apos;interagir avec les résultats de
               recherche.
             </p>
           </div>
@@ -186,7 +186,7 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground">
                   Les chercheurs soumettent leurs manuscrits via notre plateforme en ligne. Chaque soumission est
-                  immédiatement vérifiée pour s'assurer qu'elle respecte nos standards.
+                  immédiatement vérifiée pour s&apos;assurer qu&apos;elle respecte nos standards.
                 </p>
               </CardContent>
             </Card>
@@ -216,7 +216,7 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground">
                   Les auteurs révisent leurs articles en fonction des commentaires des évaluateurs. Notre équipe
-                  éditoriale accompagne ce processus d'amélioration.
+                  éditoriale accompagne ce processus d&apos;amélioration.
                 </p>
               </CardContent>
             </Card>
@@ -231,7 +231,7 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground">
                   Une fois acceptés, les articles sont publiés avec des visualisations interactives et des outils
-                  d'analyse pour maximiser leur impact.
+                  d&apos;analyse pour maximiser leur impact.
                 </p>
               </CardContent>
             </Card>

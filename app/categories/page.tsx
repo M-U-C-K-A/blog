@@ -32,7 +32,7 @@ export default async function CategoriesPage() {
       <div className="container mx-auto py-10 px-4 md:px-6">
         <div className="mb-8">
           <h1 className="text-4xl font-bold tracking-tight mb-4">Catégories scientifiques</h1>
-          <p className="text-xl text-muted-foreground">Explorez nos recherches par domaine d'expertise</p>
+          <p className="text-xl text-muted-foreground">Explorez nos recherches par domaine d&apos;expertise</p>
         </div>
 
         {/* Stats */}

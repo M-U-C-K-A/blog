@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 declare global {
-  var prisma: PrismaClient | undefined
+  let prisma: PrismaClient | undefined
 }
 
 // Cette variable stockera notre instance PrismaClient
@@ -33,4 +33,4 @@ process.on('beforeExit', disconnect)
 process.on('SIGTERM', disconnect)
 process.on('SIGINT', disconnect)
 
-export { prisma as db } 
+export { prisma as db }

@@ -1,6 +1,6 @@
 import { getArticleBySlug, getRelatedArticles, getAdjacentArticles } from "@/lib/data"
 import { notFound } from "next/navigation"
-import { Metadata } from "next"
+import { Metadata, PageProps } from "next"
 import { Header } from "@/components/header"
 import { ReadingProgress } from "@/components/reading-progress"
 import { ArticleNavigation } from "@/components/article-navigation"
@@ -9,14 +9,8 @@ import { RelatedArticles } from "@/components/related-articles"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 
-interface ArticlePageProps {
-  params: {
-    slug: string
-  }
-}
-
 // 🔍 Génération dynamique des métadonnées
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const article = await getArticleBySlug(params.slug)
 
   if (!article) {
@@ -35,7 +29,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     openGraph: {
       title: `${article.title} | Climate Impact News`,
       description: article.description,
-      type: "article",
+      type: "article", 
       publishedTime: article.publishedAt.toISOString(),
       authors: [article.author.name],
       images: [{ url: ogImage, width: 1200, height: 630, alt: article.title }],
@@ -65,7 +59,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 }
 
 // 📰 Page principale
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: PageProps) {
   const article = await getArticleBySlug(params.slug)
 
   if (!article) notFound()
@@ -101,7 +95,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <Separator className="my-6" />
 
         <ArticleNavigation
-          currentSlug={params.slug}
           previous={adjacentArticles.previous}
           next={adjacentArticles.next}
         />

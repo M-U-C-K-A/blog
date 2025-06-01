@@ -156,7 +156,7 @@ export function SearchArticles() {
           {searchQuery.trim() && (
             <span>
               {" "}
-              pour "<strong>{searchQuery}</strong>"
+              pour &quot;<strong>{searchQuery}</strong>&quot;
             </span>
           )}
         </p>
