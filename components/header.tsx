@@ -1,8 +1,6 @@
 import Link from "next/link"
 import { BookOpen } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Sub } from "@radix-ui/react-context-menu"
 import { SubscribeButton } from "./subscribe"
 import { ThemeToggle } from "./theme-toggle"
 
@@ -24,6 +22,9 @@ export function Header() {
           </Link>
           <Link href="/categories" className="text-sm font-medium hover:text-primary transition-colors">
             Catégories
+          </Link>
+          <Link href="/authors" className="text-sm font-medium hover:text-primary transition-colors">
+            Auteurs
           </Link>
           <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
             À propos

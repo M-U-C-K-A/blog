@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Header } from "@/components/header"
 import { ArticleCard } from "@/components/article-card"
-import { getAuthorBySlug, getArticlesByAuthor, formatDate, getInitials } from "@/lib/data"
+import { getAuthorBySlug, getArticlesByAuthor, getInitials } from "@/lib/data"
 
 interface AuthorPageProps {
   params: {
@@ -18,7 +18,7 @@ interface AuthorPageProps {
 }
 
 export async function generateMetadata({ params }: AuthorPageProps) {
-  const author = getAuthorBySlug(params.slug);
+  const author = await getAuthorBySlug(params.slug);
 
   if (!author) {
     return {
@@ -64,9 +64,9 @@ export async function generateMetadata({ params }: AuthorPageProps) {
   };
 }
 
-export default function AuthorPage({ params }: AuthorPageProps) {
-  const author = getAuthorBySlug(params.slug)
-  const articles = getArticlesByAuthor(params.slug)
+export default async function AuthorPage({ params }: AuthorPageProps) {
+  const author = await getAuthorBySlug(params.slug)
+  const articles = await getArticlesByAuthor(params.slug)
 
   if (!author) {
     notFound()
@@ -117,13 +117,13 @@ export default function AuthorPage({ params }: AuthorPageProps) {
                     <Mail className="mr-2 h-4 w-4" />
                     Contact
                   </Button>
-                  {author.contact.twitter && (
+                  {author.twitter && (
                     <Button variant="outline" size="sm">
                       <Twitter className="mr-2 h-4 w-4" />
                       Twitter
                     </Button>
                   )}
-                  {author.contact.linkedin && (
+                  {author.linkedin && (
                     <Button variant="outline" size="sm">
                       <Linkedin className="mr-2 h-4 w-4" />
                       LinkedIn
@@ -145,15 +145,15 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             <CardContent className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Articles publiés</span>
-                <span className="font-semibold">{author.stats.articles}</span>
+                <span className="font-semibold">{author.articlesCount}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Citations</span>
-                <span className="font-semibold">{author.stats.citations.toLocaleString()}</span>
+                <span className="font-semibold">{author.citations.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">H-Index</span>
-                <span className="font-semibold">{author.stats.hIndex}</span>
+                <span className="font-semibold">{author.hIndex}</span>
               </div>
             </CardContent>
           </Card>
@@ -177,7 +177,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
           <CardContent>
             <div className="space-y-4">
               {author.education.map((edu, index) => (
-                <div key={index} className="flex justify-between items-start">
+                <div key={edu.id} className="flex justify-between items-start">
                   <div>
                     <h2 className="font-semibold">{edu.degree}</h2>
                     <p className="text-muted-foreground">{edu.institution}</p>
@@ -198,40 +198,11 @@ export default function AuthorPage({ params }: AuthorPageProps) {
             <h2 className="text-3xl font-bold">Articles publiés ({articles.length})</h2>
           </div>
 
-          {articles.length > 0 ? (
-            <div className="space-y-6">
-              {articles.map((article) => (
-                <article key={article.slug} className="border rounded-lg p-6">
-                  <Link href={`/articles/${article.slug}`}>
-                    <h3 className="text-xl font-semibold mb-2 hover:text-blue-600">
-                      {article.title}
-                    </h3>
-                  </Link>
-                  <p className="text-gray-600 mb-4">{article.description}</p>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <span className="mr-4">{formatDate(article.publishedAt)}</span>
-                    <span className="mr-4">{article.readTime}</span>
-                    <span className="mr-4">{article.views} vues</span>
-                    <span>{article.citations} citations</span>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {article.tags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="text-center py-12">
-                <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">Aucun article publié pour le moment.</p>
-              </CardContent>
-            </Card>
-          )}
+          <div className="grid gap-6 md:grid-cols-2">
+            {articles.map((article) => (
+              <ArticleCard key={article.id} article={article} />
+            ))}
+          </div>
         </section>
       </div>
     </div>

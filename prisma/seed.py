@@ -258,5 +258,109 @@ async def seed_database():
 
     await db.disconnect()
 
+async def main():
+    db = Prisma()
+    await db.connect()
+
+    # Create authors
+    author1 = await db.author.create({
+        "name": "Dr. Marie Laurent",
+        "slug": "dr-marie-laurent",
+        "title": "Directrice de Recherche",
+        "affiliation": "Université Paris-Saclay",
+        "bio": "Spécialiste en intelligence artificielle et apprentissage automatique",
+        "expertise": ["Intelligence Artificielle", "Machine Learning", "Deep Learning"],
+        "email": "marie.laurent@paris-saclay.fr",
+        "twitter": "DrMLaurent",
+        "linkedin": "marie-laurent-ai",
+        "orcid": "0000-0002-1234-5678",
+        "articlesCount": 45,
+        "citations": 1200,
+        "hIndex": 20,
+        "avatar": "https://example.com/avatars/marie-laurent.jpg"
+    })
+
+    author2 = await db.author.create({
+        "name": "Prof. Thomas Dubois",
+        "slug": "prof-thomas-dubois",
+        "title": "Professeur des Universités",
+        "affiliation": "École Polytechnique",
+        "bio": "Expert en robotique et systèmes autonomes",
+        "expertise": ["Robotique", "Systèmes Autonomes", "Control Systems"],
+        "email": "thomas.dubois@polytechnique.edu",
+        "twitter": "TDuboisRobotics",
+        "linkedin": "thomas-dubois-robotics",
+        "articlesCount": 32,
+        "citations": 850,
+        "hIndex": 15,
+        "avatar": "https://example.com/avatars/thomas-dubois.jpg"
+    })
+
+    # Create education entries
+    await db.education.create({
+        "degree": "PhD en Intelligence Artificielle",
+        "institution": "École Normale Supérieure",
+        "year": "2010",
+        "authorId": author1.id
+    })
+
+    await db.education.create({
+        "degree": "PhD en Robotique",
+        "institution": "ETH Zürich",
+        "year": "2008",
+        "authorId": author2.id
+    })
+
+    # Create categories
+    ai_category = await db.category.create({
+        "name": "Intelligence Artificielle",
+        "slug": "intelligence-artificielle"
+    })
+
+    robotics_category = await db.category.create({
+        "name": "Robotique",
+        "slug": "robotique"
+    })
+
+    # Create tags
+    ml_tag = await db.tag.create({
+        "name": "Machine Learning"
+    })
+
+    robotics_tag = await db.tag.create({
+        "name": "Robotique"
+    })
+
+    # Create articles
+    article1 = await db.article.create({
+        "title": "Les avancées récentes en deep learning",
+        "slug": "avancees-recentes-deep-learning",
+        "description": "Une analyse approfondie des dernières innovations en deep learning",
+        "content": "Le deep learning continue d'évoluer rapidement...",
+        "publishedAt": datetime.now(),
+        "readTime": "8 min",
+        "featured": True,
+        "views": 1500,
+        "citations": 25,
+        "authorId": author1.id,
+        "categoryId": ai_category.id
+    })
+
+    # Connect tags to article
+    await db.article.update(
+        where={"id": article1.id},
+        data={"tags": {"connect": [{"id": ml_tag.id}]}}
+    )
+
+    # Create article components
+    await db.component.create({
+        "type": "image",
+        "data": {"url": "https://example.com/images/deep-learning.jpg", "caption": "Architecture d'un réseau de neurones"},
+        "articleId": article1.id
+    })
+
+    print("Base de données peuplée avec succès!")
+    await db.disconnect()
+
 if __name__ == "__main__":
-    asyncio.run(seed_database()) 
+    asyncio.run(main()) 

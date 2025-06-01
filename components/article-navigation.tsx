@@ -1,17 +1,17 @@
 // components/article-navigation.tsx
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { getAdjacentArticles } from "@/lib/data"
+import { Article } from "@/lib/types"
 
 interface ArticleNavigationProps {
   currentSlug: string
+  previous: Article | null
+  next: Article | null
 }
 
-export const ArticleNavigation = ({ currentSlug }: ArticleNavigationProps) => {
-  const { previous, next } = getAdjacentArticles(currentSlug)
-
+export const ArticleNavigation = ({ currentSlug, previous, next }: ArticleNavigationProps) => {
   return (
-    <div className="flex justify-between items-center my-12 gap-4">
+    <div className="flex justify-between items-center my-6 gap-4">
       {previous && (
         <Link
           href={`/articles/${previous.slug}`}

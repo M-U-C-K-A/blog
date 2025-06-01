@@ -10,16 +10,18 @@ import { getFeaturedArticles, getCategories, formatDate } from "@/lib/data"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { getInitials } from "@/lib/data"
 
-const featuredArticles = getFeaturedArticles()
-const categories = getCategories()
-
 const stats = [
   { icon: BookOpen, label: "Articles publiés", value: "1,247" },
   { icon: Users, label: "Chercheurs", value: "89" },
   { icon: TrendingUp, label: "Citations", value: "12,456" },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [featuredArticles, categories] = await Promise.all([
+    getFeaturedArticles(),
+    getCategories()
+  ])
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -90,7 +92,7 @@ export default function HomePage() {
                     </Avatar>
                     <div className="ml-3">
                       <p className="text-sm font-medium">{article.author.name}</p>
-                      <p className="text-sm text-gray-500">{formatDate(article.publishedAt)}</p>
+                      <p className="text-sm text-gray-500">{formatDate(article.publishedAt.toISOString())}</p>
                     </div>
                   </div>
                   <div className="mt-4 flex items-center text-sm text-gray-500">

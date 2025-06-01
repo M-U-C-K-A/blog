@@ -1,51 +1,49 @@
 import Link from "next/link"
-import { ArrowRight, Calendar, User } from "lucide-react"
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Article } from "@/lib/definitions"
+import { getInitials, formatDate } from "@/lib/data"
 
 interface ArticleCardProps {
-  title: string
-  description: string
-  author: string
-  author_slug: string
-  date: string
-  category: string
-  slug: string
-  readTime?: string
+  article: Article
 }
 
-export function ArticleCard({ title, description, author, author_slug, date, category, slug, readTime }: ArticleCardProps) {
+export function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader>
-        <div className="flex items-center justify-between mb-2">
-          <Badge variant="secondary">{category}</Badge>
-          {readTime && <span className="text-sm text-muted-foreground">{readTime}</span>}
+    <article className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow">
+      <Link href={`/articles/${article.slug}`}>
+        <div className="p-6">
+          <div className="mb-4">
+            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              {article.category.name}
+            </span>
+          </div>
+          <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
+          <p className="text-gray-600 mb-4">{article.description}</p>
+          <div className="flex items-center">
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={`/avatars/${article.author.slug}.svg`} alt={article.author.name} />
+              <AvatarFallback>{getInitials(article.author.name)}</AvatarFallback>
+            </Avatar>
+            <div className="ml-3">
+              <p className="text-sm font-medium">{article.author.name}</p>
+              <p className="text-sm text-gray-500">{formatDate(article.publishedAt.toISOString())}</p>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm text-gray-500">
+            <span className="mr-4">{article.readTime}</span>
+            <span className="mr-4">{article.views} vues</span>
+            <span>{article.citations} citations</span>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {article.tags.map((tag) => (
+              <Badge key={tag.id} variant="outline">
+                {tag.name}
+              </Badge>
+            ))}
+          </div>
         </div>
-        <CardTitle className="line-clamp-2">{title}</CardTitle>
-        <CardDescription className="flex items-center gap-4 text-sm">
-			<Link href={`/authors/${author_slug}`} className="flex items-center gap-1">
-            <User className="h-3 w-3" />
-            {author}
-			</Link>
-          <span className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            {date}
-          </span>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <p className="line-clamp-3 text-muted-foreground">{description}</p>
-      </CardContent>
-      <CardFooter>
-        <Link href={`/articles/${slug}`} className="w-full">
-          <Button className="w-full">
-            Lire l'article <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
-      </CardFooter>
-    </Card>
+      </Link>
+    </article>
   )
 }

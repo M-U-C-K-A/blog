@@ -30,7 +30,7 @@ export function RelatedArticles({ articles }: RelatedArticlesProps) {
               <div>
                 <div className="font-medium text-sm">{article.author.name}</div>
                 <div className="text-sm text-gray-500">
-                  {formatDate(article.publishedAt)} · {article.readTime}
+                {formatDate(article.publishedAt.toISOString())} · {article.readTime}
                 </div>
               </div>
             </div>
